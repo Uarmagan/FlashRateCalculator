@@ -1,52 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Flash Rate Calculator</title>
-  </head>
 
-  <body>
-    <div class="container-fluid">
-      <form
-        id="myForm"
-        class="d-flex flex-row justify-content-around align-items-end ml-3"
-      >
-        <div class="form-group m-2 col-5">
-          <label for="pickup">Pickup</label>
-          <input
-            type="search"
-            class="form-control pickup"
-            placeholder="Enter pickup"
-            required
-          />
-        </div>
-        <div class="form-group m-2 col-5">
-          <label for="dropoff">Dropoff</label>
-          <input
-            type="search"
-            class="form-control dropoff"
-            placeholder="enter dropoff"
-            required
-          />
-        </div>
-        <div class="submit-button form-group m-2 col-2">
-          <button class="btn btn-primary pb-2">Calculate</button>
-        </div>
-      </form>
-      <h1 class="" id="distance"></h1>
-    </div>
-    <script type="text/javascript" src="main.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR09NkqAeG35WBJTg1oHT4T-3kYTCME70&libraries=places"></script>
-    
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Flash Rate Calculator</title>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <form id="myForm" class="d-flex flex-row justify-content-around align-items-end ml-3">
+      <div class="form-group m-2 col-5">
+        <label for="pickup">Pickup</label>
+        <input type="search" class="form-control pickup" placeholder="Enter pickup" required />
+      </div>
+      <div class="form-group m-2 col-5">
+        <label for="dropoff">Dropoff</label>
+        <input type="search" class="form-control dropoff" placeholder="enter dropoff" required />
+      </div>
+      <div class="submit-button form-group m-2 col-2">
+        <button class="btn btn-primary pb-2 calculate">Calculate</button>
+      </div>
+    </form>
+    <h1 class="" id="distance"></h1>
+  </div>
+  <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR09NkqAeG35WBJTg1oHT4T-3kYTCME70&libraries=places"></script>
+
 </body>
 
 </html>
