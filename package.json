@@ -1,0 +1,21 @@
+{
+  "name": "FlashRateCalculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html main.js",
+    "build": "parcel build index.html main.js style.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-preset-es2015": "^6.24.1",
+    "parcel-bundler": "^1.11.0"
+  },
+  "dependencies": {
+    "dotenv": "^6.2.0"
+  }
+}
