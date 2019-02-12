@@ -6,12 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropoffField = document.querySelector('.dropoff');
   const calcButton = document.querySelector('.calculate');
 
-  let pickupInfo;
-  let dropoffInfo;
+  var pickupInfo;
+  var dropoffInfo;
 
   const autocompletePickup = autocompleteForm(pickupField);
   const autocompleteDropoff = autocompleteForm(dropoffField);
-  var service = new google.maps.DistanceMatrixService();
+  const distanceService = new google.maps.DistanceMatrixService();
 
   calcButton.addEventListener('click', (event) => {
     event.preventDefault();
@@ -23,21 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
     var origin1 = pickupInfo.formatted_address;
     var destinationA = dropoffInfo.formatted_address;
 
-    const distanceService = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
+    
+    distanceService.getDistanceMatrix(
       {
         origins: [origin1],
         destinations: [destinationA],
         travelMode: 'DRIVING',
         unitSystem: google.maps.UnitSystem.IMPERIAL
-      }, callback);
+      }, distanceMatrixCallback);
     });
 });
 
-function callback(response, status) {
-  let test = response.rows[0].elements[0].distance.text
+function distanceMatrixCallback(response, status) {
+  let ptpDistance = response.rows[0].elements[0].distance.text
   let element = document.querySelector('.distance');
-  element.textContent += test
+  element.textContent = ptpDistance;
 }
 
 const autocompleteForm = (formField) => {
