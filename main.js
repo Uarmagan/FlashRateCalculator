@@ -20,14 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(pickupInfo);
     console.log(dropoffInfo);
 
-    var origin1 = pickupInfo.formatted_address;
-    var destinationA = dropoffInfo.formatted_address;
+    var origin = pickupInfo.formatted_address;
+    var destination = dropoffInfo.formatted_address;
 
     
     distanceService.getDistanceMatrix(
       {
-        origins: [origin1],
-        destinations: [destinationA],
+        origins: [origin],
+        destinations: [destination],
         travelMode: 'DRIVING',
         unitSystem: google.maps.UnitSystem.IMPERIAL
       }, distanceMatrixCallback);
