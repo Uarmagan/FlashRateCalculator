@@ -1,13 +1,15 @@
 'use strict';
 
+const pickupField = document.querySelector('.pickup');
+const dropoffField = document.querySelector('.dropoff');
+const calcButton = document.querySelector('.calculate');
+
+var pickupInfo;
+var dropoffInfo;
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
-
-  const pickupField = document.querySelector('.pickup');
-  const dropoffField = document.querySelector('.dropoff');
-  const calcButton = document.querySelector('.calculate');
-
-  var pickupInfo;
-  var dropoffInfo;
 
   const autocompletePickup = autocompleteForm(pickupField);
   const autocompleteDropoff = autocompleteForm(dropoffField);
@@ -67,4 +69,10 @@ const autocompleteForm = (formField) => {
     }
   });
   return selection;
+}
+
+if ( module.hot ) {
+  module.hot.accept(function () {
+    window.location.reload();
+  });
 }
