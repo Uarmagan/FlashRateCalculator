@@ -20,18 +20,31 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(pickupInfo);
     console.log(dropoffInfo);
 
-    var origin = pickupInfo.formatted_address;
-    var destination = dropoffInfo.formatted_address;
-
+    const origin = pickupInfo.formatted_address;
+    const destination = dropoffInfo.formatted_address;
+    const office = "5320 W Lawrence Ave #211, Chicago, IL 60630, USA";
     
-    distanceService.getDistanceMatrix(
-      {
-        origins: [origin],
-        destinations: [destination],
-        travelMode: 'DRIVING',
-        unitSystem: google.maps.UnitSystem.IMPERIAL
-      }, distanceMatrixCallback);
-    });
+    distanceService.getDistanceMatrix({
+      origins: [office],
+      destinations: [origin],
+      travelMode: 'DRIVING',
+      unitSystem: google.maps.UnitSystem.IMPERIAL
+    }, (response) => console.log(`garage to pickup: ${response.rows[0].elements[0].distance.text}`));
+
+    distanceService.getDistanceMatrix({
+      origins: [destination],
+      destinations: [office],
+      travelMode: 'DRIVING',
+      unitSystem: google.maps.UnitSystem.IMPERIAL
+    }, (response) => console.log(`dropoff to garage: ${response.rows[0].elements[0].distance.text}`));
+
+    distanceService.getDistanceMatrix({
+      origins: [origin],
+      destinations: [destination],
+      travelMode: 'DRIVING',
+      unitSystem: google.maps.UnitSystem.IMPERIAL
+    }, distanceMatrixCallback);
+  });
 });
 
 function distanceMatrixCallback(response, status) {
