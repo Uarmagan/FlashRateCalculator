@@ -1,18 +1,23 @@
 'use strict';
 
+import DistanceMatrixService from './services/distanceMatrix';
+import autocompleteService from './services/autocompleteService';
+
 const pickupField = document.querySelector('.pickup');
 const dropoffField = document.querySelector('.dropoff');
 const calcButton = document.querySelector('.calculate');
+const office = "5320 W Lawrence Ave #211, Chicago, IL 60630, USA";
 
 var pickupInfo;
 var dropoffInfo;
 
 
-
 document.addEventListener("DOMContentLoaded", () => {
-
-  const autocompletePickup = autocompleteForm(pickupField);
-  const autocompleteDropoff = autocompleteForm(dropoffField);
+  
+ const autocomplete = new autocompleteService(pickupField, dropoffField);
+  
+  const autocompletePickup = autocomplete.pickupAutocomplete;
+  const autocompleteDropoff = autocomplete.dropoffAutocomplete;
   const distanceService = new google.maps.DistanceMatrixService();
 
   calcButton.addEventListener('click', (event) => {
@@ -24,8 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const origin = pickupInfo.formatted_address;
     const destination = dropoffInfo.formatted_address;
-    const office = "5320 W Lawrence Ave #211, Chicago, IL 60630, USA";
-    
+
     distanceService.getDistanceMatrix({
       origins: [office],
       destinations: [origin],
@@ -53,22 +57,6 @@ function distanceMatrixCallback(response, status) {
   let ptpDistance = response.rows[0].elements[0].distance.text
   let element = document.querySelector('.distance');
   element.textContent = ptpDistance;
-}
-
-const autocompleteForm = (formField) => {
-  const selection = new google.maps.places.Autocomplete((formField), {
-    latLngBounds: {
-      north: 41,
-      south: 52,
-      west: 87,
-      east: 23
-    },
-    strictBounds: true,
-    componentRestrictions: {
-      country: 'us'
-    }
-  });
-  return selection;
 }
 
 if ( module.hot ) {
