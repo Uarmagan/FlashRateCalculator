@@ -24,13 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   calcButton.addEventListener('click', async (event) => {
     event.preventDefault();
-    pickupInfo = await autocompletePickup.getPlace();
-    dropoffInfo = await autocompleteDropoff.getPlace();
+    pickupInfo =  autocompletePickup.getPlace();
+    dropoffInfo =  autocompleteDropoff.getPlace();
     console.log(pickupInfo);
     console.log(dropoffInfo);
 
-    const distanceMatrix = await new DistanceMatrixService(pickupInfo.formatted_address, dropoffInfo.formatted_address, garage)
-    const pickup = pickupInfo.formatted_address
+    const distanceMatrix = new DistanceMatrixService(pickupInfo.formatted_address, dropoffInfo.formatted_address, garage)
+    const pickup =  pickupInfo.formatted_address
     const dropoff = dropoffInfo.formatted_address
     console.log(pickup)
     console.log(dropoff)
@@ -39,11 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const gtp = await distanceMatrix.getDistance(garage, pickup);
     const ptd = await distanceMatrix.getDistance(pickup, dropoff);
     const dtg = await distanceMatrix.getDistance(dropoff, garage);
-    setTimeout(() => {
-      
-    }, 100);
-    console.log(gtp)
-    console.log(ptd)
+
+    await console.log(gtp)
+    await console.log(ptd)
     // distances = {
     //   garageToPickup: await distanceMatrix.getDistance(garage, pickup),
     //   pickupToDropoff: await distanceMatrix.getDistance(pickup, dropoff),
