@@ -1,31 +1,60 @@
 'use strict';
 
+require("babel-core/register");
+require("babel-polyfill");
+
+import DistanceMatrixService from './services/distanceMatrix';
+import autocompleteService from './services/autocompleteService';
+
+const pickupField = document.querySelector('.pickup');
+const dropoffField = document.querySelector('.dropoff');
+const calcButton = document.querySelector('.calculate');
+const garage = "5320 W Lawrence Ave #211, Chicago, IL 60630, USA";
+var distances = {}
+var pickupInfo;
+var dropoffInfo;
+
+
 document.addEventListener("DOMContentLoaded", () => {
-  require('dotenv').config();
-  const pickupAutocompleteForm = document.getElementById('pickup');
-  const dropoffAutocompleteForm = document.getElementById('dropoff');
-  const API_KEY = process.env.GO_FLASH_API; 
+  
+ const autocomplete = new autocompleteService(pickupField, dropoffField);
+  
+  const autocompletePickup = autocomplete.pickupAutocomplete;
+  const autocompleteDropoff = autocomplete.dropoffAutocomplete;
 
-  // const script = document.createElement('script'); 
-  // script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`;
-  // document.body.append(script);
-  console.log(`api key is ${API_KEY}`)
+  calcButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    pickupInfo =  autocompletePickup.getPlace();
+    dropoffInfo =  autocompleteDropoff.getPlace();
+    console.log(pickupInfo);
+    console.log(dropoffInfo);
 
-  const autocompletePickup = new google.maps.places.Autocomplete((pickupAutocompleteForm), {
-      latLngBounds:{north: 41, south: 52, west: 87, east: 23} ,
-      strictBounds:true,
-      componentRestrictions: {country: 'us'}
-    });
+    const distanceMatrix = new DistanceMatrixService(pickupInfo.formatted_address, dropoffInfo.formatted_address, garage)
+    const pickup =  pickupInfo.formatted_address
+    const dropoff = dropoffInfo.formatted_address
+    console.log(pickup)
+    console.log(dropoff)
 
-    const autocompleteDropoff = new google.maps.places.Autocomplete((dropoffAutocompleteForm), {
-      latLngBounds:{north: 41, south: 52, west: 87, east: 23},
-      strictBounds:true,
-      componentRestrictions: {country: 'us'}
-    });
 
-    autocompletePickup.addListener('place_changed', () => {
-      const pickupInfo = autocompletePickup.getPlace();
-      console.log(pickupInfo)
-    })
+    const gtp = await distanceMatrix.getDistance(garage, pickup);
+    const ptd = await distanceMatrix.getDistance(pickup, dropoff);
+    const dtg = await distanceMatrix.getDistance(dropoff, garage);
+
+    await console.log(gtp)
+    await console.log(ptd)
+    // distances = {
+    //   garageToPickup: await distanceMatrix.getDistance(garage, pickup),
+    //   pickupToDropoff: await distanceMatrix.getDistance(pickup, dropoff),
+    //   dropoffToGarage: await distanceMatrix.getDistance(dropoff, garage)
+    // }
+  
+    console.log(distances)
+  });
 });
 
+
+if ( module.hot ) {
+  module.hot.accept(function () {
+    window.location.reload();
+  });
+}
